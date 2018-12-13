@@ -21,7 +21,12 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".HandlerTestActivity" />
         <activity android:name=".IntentServiceTestActivity" />
-        <activity android:name=".HandlerThreadTestActivity"></activity>
+        <activity android:name=".HandlerThreadTestActivity" />
+        <activity android:name=".RunOnUiThreadActivity" />
+        <activity
+            android:name=".IntentServiceActivity"
+            android:label="@string/title_activity_intent_service"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

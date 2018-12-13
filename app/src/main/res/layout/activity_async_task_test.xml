@@ -8,7 +8,15 @@
 <TextView
     android:textColor="@color/colorPrimary"
     android:textSize="16sp"
+    app:layout_constraintLeft_toLeftOf="parent"
     android:id="@+id/tv"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/cancle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv"
+        android:text="取消"/>
 </android.support.constraint.ConstraintLayout>

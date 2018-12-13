@@ -82,11 +82,12 @@ public class MyTask extends AsyncTask<Integer,Integer,String>{
      */
     @Override
     protected void onCancelled() {
-        super.onCancelled();
+        listener.updateCancle();
     }
 
     public interface CallbackListener{
         void updateProgress(int progress);
         void updateCompelete(String result);
+        void updateCancle();
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidMoreThread</string>
+    <string name="title_activity_intent_service">IntentServiceActivity</string>
 </resources>
