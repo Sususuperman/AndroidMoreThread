@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AsyncTaskTestActivity">
+        <activity android:name=".IntentServiceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,9 +24,11 @@
         <activity android:name=".HandlerThreadTestActivity" />
         <activity android:name=".RunOnUiThreadActivity" />
         <activity
-            android:name=".IntentServiceActivity"
+            android:name=".AsyncTaskTestActivity"
             android:label="@string/title_activity_intent_service"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service android:name=".MyIntentService" />
     </application>
 
 </manifest>
