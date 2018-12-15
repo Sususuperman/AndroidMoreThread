@@ -1,5 +1,4 @@
-# AndroidMoreThread
-android多线程的学习与练习
+ 博客地址：https://blog.csdn.net/qq_33241516/article/details/84956111
  1. **为什么需要多线程？**
  需要多线程的本质就是要进行异步处理，莫要让用户感觉到“很卡”。更不能出现ANR（Application Not Response）这种现象。
  2. **Android的多线程理解？**
@@ -127,7 +126,7 @@ Handler只是处理它所关联的Looper中的MessageQueue中的Message，至于
     }
 ```
 所以拿过来用就行了，不用每次去`Looper.prepare(),Looper.loop()`了。记住必须得先`start()`。了解HandlerThread源码解析的，请参考博客（[Android 多线程之HandlerThread 完全详解](https://blog.csdn.net/javazejian/article/details/52426353)）
-2）**AsyncTask**（参考博客：[Android 多线程-----AsyncTask详解](https://www.cnblogs.com/xiaoluo501395377/p/3430542.html)，[android多线程-AsyncTask之工作原理深入解析(上)，](https://blog.csdn.net/javazejian/article/details/52462830)）
+2）**AsyncTask**（参考博客：[Android 多线程-----AsyncTask详解](https://www.cnblogs.com/xiaoluo501395377/p/3430542.html)，[android多线程-AsyncTask之工作原理深入解析(上)，](https://blog.csdn.net/javazejian/article/details/52462830)[Android 多线程：AsyncTask最详细使用教程](https://www.jianshu.com/p/ee1342fcf5e7)）
 AsyncTask，异步任务，是一个抽象泛型类。从字面上理解就是在UI线程运行的过程中，异步的完成一些操作。AsyncTask相对于Handler代码简单，使用方便。AsyncTask就相当于Android给我们提供了一个多线程编程的一个框架，其介于Thread和Handler之间。也因为是抽象类，使用时需要继承AsyncTask创建一个新类。
 它提供了Params、Progress、Result 三个泛型参数。
 ```
@@ -216,11 +215,75 @@ public final AsyncTask<Params, Progress, Result> execute(Params... params){...}
 该方法是一个final方法，参数类型是可变类型，实际上这里传递的参数和doInBackground(Params…params)方法中的参数是一样的，该方法最终返回一个AsyncTask的实例对象，可以使用该对象进行其他操作，比如结束线程之类的。启动范例如下：
 
     new DownLoadAsyncTask().execute(url1,url2,url3);
+***使用用AsyncTask的优点？***
+
+ - 方便实现异步通信
+ 不需使用 “任务线程（如继承Thread类） + Handler”的复杂组合
+ - 节省资源
+采用线程池的缓存线程 + 复用线程，避免了频繁创建 & 销毁线程所带来的系统资源开销
+
 ***调用AsyncTask需要注意的一些点？***
 
  - AsyncTask的实例必须在主线程（UI线程）中创建 ，execute方法也必须在主线程中调用
  -  不要在程序中直接的调用onPreExecute(), onPostExecute(Result)，doInBackground(Params…), onProgressUpdate(Progress…)这几个方法
  - 不能在doInBackground(Params… params)中更新UI
  - 一个AsyncTask对象只能被执行一次，也就是execute方法只能调用一次，否则多次调用时将会抛出异常
+ 
+**3）activity的调用方法 runOnUiThread(Runnable action)**
+	
+从源代码中可以看出，程序首先会判断当前线程是否是UI线程，如果是就直接运行，如果不是则post，这时其实质还是使用的Handler机制来处理线程与UI通讯。
+ 
+
+```
+/**
+     * Runs the specified action on the UI thread. If the current thread is the UI
+     * thread, then the action is executed immediately. If the current thread is
+     * not the UI thread, the action is posted to the event queue of the UI thread.
+     *
+     * @param action the action to run on the UI thread
+     */
+    @Override
+    public final void runOnUiThread(Runnable action) {
+        if (Thread.currentThread() != mUiThread) {
+            mHandler.post(action);
+        } else {
+            action.run();
+        }
+    }
+```
+示例：
+
+```
+/**
+     * 1s后吐司
+     * @param view
+     */
+public void onStart(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);//模仿耗时操作
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                runOnUiThread(new Runnable() {//程序首先会判断当前线程是否是UI线程，如果是就直接运行，如果不是则post，
+                    // 这时其实质还是使用的Handler机制来处理线程与UI通讯。
+                    @Override
+                    public void run() {
+                        Toast.makeText(RunOnUiThreadActivity.this,"执行runOnUiThread",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).start();
+    }
+```
+**4）控件本身View.post(Runnable action)**(参考博文：[通过View.post()获取View的宽高引发的两个问题](https://blog.csdn.net/scnuxisan225/article/details/49815269)，[View.post()到底干了啥](https://www.cnblogs.com/dasusu/p/8047172.html))
+	View.post(Runnable action)多用于来动态获取view的高度。
+
+github练习地址：https://github.com/Sususuperman/AndroidMoreThread/tree/master
+
 
   
+
