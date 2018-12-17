@@ -2,9 +2,11 @@ package event.superman.com.androidmorethread;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.telecom.Call;
+import android.util.Log;
 
 /**
  * 作者 Superman
@@ -55,5 +57,13 @@ public class MyIntentService extends IntentService {
 //        default void toast(){
 //
 //        }
+    }
+
+    Handler handler = new Handler(){};//与主线程looper绑定。在主线程中运行
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i("TAG",handler.getLooper().getThread().getName());
     }
 }

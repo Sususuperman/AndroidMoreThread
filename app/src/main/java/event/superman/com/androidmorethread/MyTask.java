@@ -15,7 +15,6 @@ public class MyTask extends AsyncTask<Integer,Integer,String>{
     public MyTask(CallbackListener listener){
         this.listener = listener;
     }
-
     /**
      * 可以不用重写
      * 在UI线程中调用，异步任务开始之前执行。

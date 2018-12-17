@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 public class IntentServiceActivity extends AppCompatActivity {
-    Handler mUiHandler=new Handler(){
+    Handler mUiHandler=new Handler(){//这里handler也可以通过广播的形式来接收。
         @Override
         public void handleMessage(Message msg) {
             Toast.makeText(IntentServiceActivity.this,(String)msg.obj,Toast.LENGTH_SHORT).show();
@@ -48,4 +48,6 @@ public class IntentServiceActivity extends AppCompatActivity {
         }
     }
 
+    public void stop(View view) {
+    }
 }

@@ -26,9 +26,12 @@
         <activity
             android:name=".AsyncTaskTestActivity"
             android:label="@string/title_activity_intent_service"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".MyIntentService" />
+
+        <activity android:name=".ThreadPoolActivity" />
+        <activity android:name=".demo.ImageGridActivity"></activity>
     </application>
 
 </manifest>
