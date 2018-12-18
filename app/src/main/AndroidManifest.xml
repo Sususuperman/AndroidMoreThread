@@ -31,7 +31,8 @@
         <service android:name=".MyIntentService" />
 
         <activity android:name=".ThreadPoolActivity" />
-        <activity android:name=".demo.ImageGridActivity"></activity>
+        <activity android:name=".demo.ImageGridActivity" />
+        <activity android:name=".SynchronizedTestActivity"></activity>
     </application>
 
 </manifest>
